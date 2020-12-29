@@ -16,8 +16,8 @@ def help
   puts "I accept the following commands:"
   puts "- help : displays this help message"
   puts "- list : displays a list of songs you can play"
-  puts /- play : lets you choose a song to play/
-  puts /- exit : exits this program/
+  puts "- play : lets you choose a song to play"
+  puts "- exit : exits this program"
 end
 
 def list(song_list)
@@ -30,14 +30,17 @@ end
 def play(song_list)
   puts /Please enter a song name or number:/
   user_choice = gets.strip
-  user_choice = user_choice.to_i if user_choice.to_i != 0 
   
-  if user_choice.class == Integer and (user_choice > 0 and user_choice <= song_list.length)
-    puts "Playing #{song_list[user_choice - 1]}"
-  elsif song_list.include? user_choice
-    puts "Playing #{user_choice}"
-  else 
-    puts "Invalid input, please try again"
+  while true do 
+    user_choice = user_choice.to_i if user_choice.to_i != 0 
+    if user_choice.class == Integer and (user_choice > 0 and user_choice <= song_list.length)
+      return puts "Playing #{song_list[user_choice - 1]}"
+    elsif song_list.include? user_choice
+      return puts "Playing #{user_choice}"
+    else 
+      puts "Invalid input, please try again"
+    end
+    user_choice = gets.strip
   end
 end
 
@@ -61,6 +64,7 @@ def run(song_list)
       play(song_list)
     else
       invalid_command
+      help
     end
     user_input = gets.strip
   end
